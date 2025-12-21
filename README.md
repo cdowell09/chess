@@ -74,8 +74,3 @@ npx vercel
 - [React](https://react.dev/) - UI framework
 - [chess.js](https://github.com/jhlywa/chess.js) - Chess logic
 - [react-chessboard](https://github.com/Clariity/react-chessboard) - Board component
-
-## License
-
-MIT
-# chess
