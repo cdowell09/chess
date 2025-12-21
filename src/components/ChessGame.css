@@ -1,0 +1,130 @@
+.chess-game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.game-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: min(90vw, 90vh);
+  margin-bottom: 16px;
+}
+
+.back-button {
+  background: #4a5568;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.back-button:hover {
+  background: #2d3748;
+}
+
+.turn-indicator {
+  font-size: 20px;
+  font-weight: bold;
+  color: #2d3748;
+  text-align: center;
+  flex: 1;
+  margin: 0 16px;
+}
+
+.game-over-text {
+  color: #38a169;
+  font-size: 24px;
+}
+
+.check-warning {
+  color: #e53e3e;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.board-container {
+  width: min(90vw, 90vh);
+  max-width: 600px;
+}
+
+.game-controls {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.control-button {
+  padding: 16px 32px;
+  font-size: 20px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: bold;
+}
+
+.undo-button {
+  background: #ed8936;
+  color: white;
+}
+
+.undo-button:hover:not(:disabled) {
+  background: #dd6b20;
+  transform: scale(1.05);
+}
+
+.undo-button:disabled {
+  background: #cbd5e0;
+  cursor: not-allowed;
+}
+
+.new-game-button {
+  background: #48bb78;
+  color: white;
+}
+
+.new-game-button:hover {
+  background: #38a169;
+  transform: scale(1.05);
+}
+
+/* Mobile/Tablet optimizations */
+@media (max-width: 600px) {
+  .chess-game {
+    padding: 8px;
+  }
+
+  .game-header {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .back-button {
+    align-self: flex-start;
+  }
+
+  .turn-indicator {
+    margin: 8px 0;
+  }
+
+  .control-button {
+    padding: 14px 24px;
+    font-size: 18px;
+  }
+}
