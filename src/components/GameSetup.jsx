@@ -1,12 +1,37 @@
 import { useState } from 'react';
 import './GameSetup.css';
 
+const STORAGE_KEY = 'kidsChessSettings';
+
+function loadSettings() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      return JSON.parse(saved);
+    }
+  } catch (e) {
+    // Ignore localStorage errors
+  }
+  return { playerColor: 'w', difficulty: 3 };
+}
+
+function saveSettings(settings) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+  } catch (e) {
+    // Ignore localStorage errors
+  }
+}
+
 export function GameSetup({ onStart, onBack }) {
-  const [playerColor, setPlayerColor] = useState('w');
-  const [difficulty, setDifficulty] = useState(3);
+  const savedSettings = loadSettings();
+  const [playerColor, setPlayerColor] = useState(savedSettings.playerColor);
+  const [difficulty, setDifficulty] = useState(savedSettings.difficulty);
 
   const handleStart = () => {
-    onStart({ playerColor, difficulty });
+    const settings = { playerColor, difficulty };
+    saveSettings(settings);
+    onStart(settings);
   };
 
   return (
