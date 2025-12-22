@@ -8,6 +8,12 @@
   --line: #e0d8cc;
   --shadow: 0 18px 40px rgba(31, 41, 51, 0.14);
   --shadow-sm: 0 12px 24px rgba(31, 41, 51, 0.08);
+  --bg-primary: #f7f4ee;
+  --bg-card: rgba(255, 255, 255, 0.9);
+  --bg-header: rgba(247, 244, 238, 0.8);
+  --brand-bg: #1f2933;
+  --brand-text: #f7f2e9;
+  --accent: #2f7c6d;
   font-family: var(--font-body);
   line-height: 1.5;
   font-weight: 400;
@@ -15,6 +21,20 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+[data-theme="dark"] {
+  --text: #e8e6e3;
+  --muted: #9ca3af;
+  --line: #3d4654;
+  --shadow: 0 18px 40px rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 12px 24px rgba(0, 0, 0, 0.2);
+  --bg-primary: #1a1d23;
+  --bg-card: rgba(45, 50, 58, 0.9);
+  --bg-header: rgba(26, 29, 35, 0.9);
+  --brand-bg: #e8e6e3;
+  --brand-text: #1a1d23;
+  --accent: #4ade9a;
 }
 
 #root {

@@ -11,16 +11,28 @@ html, body {
 
 body {
   font-family: var(--font-body);
-  background:
-    radial-gradient(1200px 800px at 10% -10%, #e8efe7 0%, transparent 55%),
-    radial-gradient(900px 600px at 90% 0%, #f0e2d3 0%, transparent 55%),
-    #f7f4ee;
+  background: var(--bg-primary);
   color: var(--text);
   min-height: 100vh;
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   user-select: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+:root:not([data-theme="dark"]) body {
+  background:
+    radial-gradient(1200px 800px at 10% -10%, #e8efe7 0%, transparent 55%),
+    radial-gradient(900px 600px at 90% 0%, #f0e2d3 0%, transparent 55%),
+    #f7f4ee;
+}
+
+[data-theme="dark"] body {
+  background:
+    radial-gradient(1200px 800px at 10% -10%, rgba(45, 60, 55, 0.4) 0%, transparent 55%),
+    radial-gradient(900px 600px at 90% 0%, rgba(60, 50, 45, 0.3) 0%, transparent 55%),
+    #1a1d23;
 }
 
 .app {
@@ -38,9 +50,10 @@ body {
   position: sticky;
   top: 0;
   backdrop-filter: blur(10px);
-  background: rgba(247, 244, 238, 0.8);
-  border-bottom: 1px solid rgba(224, 216, 204, 0.6);
+  background: var(--bg-header);
+  border-bottom: 1px solid var(--line);
   z-index: 10;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .brand {
@@ -57,9 +70,10 @@ body {
   width: 36px;
   height: 36px;
   border-radius: 12px;
-  background: #1f2933;
-  color: #f7f2e9;
+  background: var(--brand-bg);
+  color: var(--brand-text);
   font-size: 18px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .brand-text {
@@ -92,7 +106,27 @@ body {
 .nav-link.active {
   border-color: rgba(31, 41, 51, 0.5);
   box-shadow: var(--shadow-sm);
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--bg-card);
+}
+
+.dark-mode-toggle {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: transparent;
+  font-size: 18px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.dark-mode-toggle:hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
 }
 
 .page {
