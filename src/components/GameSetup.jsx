@@ -23,6 +23,20 @@ function saveSettings(settings) {
   }
 }
 
+// Green to orange to red gradient colors for difficulty levels 1-10
+const difficultyColors = [
+  '#4fa88b', // 1 - green
+  '#6ca17f', // 2
+  '#899b73', // 3
+  '#a69466', // 4
+  '#c38d5a', // 5
+  '#d18452', // 6
+  '#cf784f', // 7
+  '#ce6d4b', // 8
+  '#cc6148', // 9
+  '#ca5544', // 10 - red
+];
+
 export function GameSetup({ onStart, onBack }) {
   const savedSettings = loadSettings();
   const [playerColor, setPlayerColor] = useState(savedSettings.playerColor);
@@ -41,6 +55,7 @@ export function GameSetup({ onStart, onBack }) {
       </button>
 
       <h1 className="setup-title">Game Setup</h1>
+      <p className="setup-subtitle">Choose your color and difficulty, then start.</p>
 
       <div className="setup-section">
         <h2>Choose Your Color</h2>
@@ -70,22 +85,18 @@ export function GameSetup({ onStart, onBack }) {
           <span>Easy</span>
           <span>Hard</span>
         </div>
-        <input
-          type="range"
-          min="1"
-          max="10"
-          value={difficulty}
-          onChange={(e) => setDifficulty(parseInt(e.target.value))}
-          className="difficulty-slider"
-        />
-        <div className="difficulty-numbers">
+        <div className="difficulty-buttons">
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
-            <span
+            <button
               key={n}
-              className={n === difficulty ? 'active' : ''}
+              className={`difficulty-btn ${n === difficulty ? 'selected' : ''}`}
+              onClick={() => setDifficulty(n)}
+              style={{
+                '--btn-color': difficultyColors[n - 1],
+              }}
             >
               {n}
-            </span>
+            </button>
           ))}
         </div>
       </div>

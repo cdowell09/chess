@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(31, 41, 51, 0.65);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -19,13 +19,14 @@
 }
 
 .game-over-modal {
-  background: white;
-  border-radius: 24px;
-  padding: 48px;
+  background: #fbfbf7;
+  border-radius: 28px;
+  padding: 40px;
   text-align: center;
   max-width: 400px;
   width: 100%;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(224, 216, 204, 0.7);
+  box-shadow: var(--shadow);
   animation: slideUp 0.4s ease-out;
 }
 
@@ -50,7 +51,7 @@
 }
 
 .celebration-emoji {
-  font-size: 80px;
+  font-size: 72px;
   margin-bottom: 16px;
   animation: bounce 1s ease-in-out infinite;
 }
@@ -61,18 +62,19 @@
 }
 
 .modal-title {
-  font-size: 36px;
-  color: #2d3748;
+  font-family: var(--font-display);
+  font-size: 32px;
+  color: var(--text);
   margin-bottom: 8px;
 }
 
 .winner .modal-title {
-  color: #38a169;
+  color: #2f7c6d;
 }
 
 .modal-message {
-  font-size: 20px;
-  color: #718096;
+  font-size: 18px;
+  color: var(--muted);
   margin-bottom: 32px;
 }
 
@@ -83,31 +85,33 @@
 }
 
 .modal-button {
-  padding: 16px 32px;
-  font-size: 22px;
-  font-weight: bold;
+  padding: 14px 28px;
+  font-size: 18px;
+  font-weight: 600;
   border: none;
-  border-radius: 12px;
+  border-radius: 999px;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .modal-button:hover {
-  transform: scale(1.05);
+  transform: translateY(-1px);
 }
 
 .play-again {
-  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
-  color: white;
+  background: #1f2933;
+  color: #f7f2e9;
 }
 
 .back-menu {
-  background: #e2e8f0;
-  color: #4a5568;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--line);
 }
 
 .back-menu:hover {
-  background: #cbd5e0;
+  border-color: rgba(47, 124, 109, 0.4);
+  box-shadow: var(--shadow-sm);
 }
 
 @media (max-width: 600px) {
@@ -116,18 +120,18 @@
   }
 
   .celebration-emoji {
-    font-size: 60px;
+    font-size: 56px;
   }
 
   .modal-title {
-    font-size: 28px;
+    font-size: 26px;
   }
 
   .modal-message {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   .modal-button {
-    font-size: 18px;
+    font-size: 16px;
   }
 }

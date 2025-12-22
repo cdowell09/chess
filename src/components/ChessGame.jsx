@@ -199,14 +199,14 @@ export function ChessGame({
     // Highlight selected square
     if (selectedSquare) {
       styles[selectedSquare] = {
-        backgroundColor: 'rgba(255, 255, 0, 0.5)',
+        backgroundColor: 'rgba(47, 124, 109, 0.25)',
       };
     }
 
     // Highlight legal move squares with dots
     legalMoves.forEach(square => {
       styles[square] = {
-        background: 'radial-gradient(circle, rgba(0, 0, 0, 0.2) 25%, transparent 25%)',
+        background: 'radial-gradient(circle, rgba(31, 41, 51, 0.25) 25%, transparent 25%)',
         cursor: 'pointer',
       };
     });
@@ -215,11 +215,11 @@ export function ChessGame({
     if (lastMove) {
       styles[lastMove.from] = {
         ...styles[lastMove.from],
-        backgroundColor: 'rgba(155, 199, 0, 0.4)',
+        backgroundColor: 'rgba(207, 177, 120, 0.35)',
       };
       styles[lastMove.to] = {
         ...styles[lastMove.to],
-        backgroundColor: 'rgba(155, 199, 0, 0.6)',
+        backgroundColor: 'rgba(207, 177, 120, 0.55)',
       };
     }
 
@@ -227,7 +227,7 @@ export function ChessGame({
     threatenedSquares.forEach(square => {
       styles[square] = {
         ...styles[square],
-        boxShadow: 'inset 0 0 0 3px rgba(255, 0, 0, 0.6)',
+        boxShadow: 'inset 0 0 0 3px rgba(202, 85, 68, 0.6)',
       };
     });
 
@@ -241,7 +241,7 @@ export function ChessGame({
             const square = String.fromCharCode(97 + col) + (8 - row);
             styles[square] = {
               ...styles[square],
-              backgroundColor: 'rgba(255, 0, 0, 0.5)',
+              backgroundColor: 'rgba(202, 85, 68, 0.5)',
             };
           }
         }
@@ -293,11 +293,12 @@ export function ChessGame({
             animationDurationInMs: 200,
             allowDragging: false,
             boardStyle: {
-              borderRadius: '8px',
-              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
+              borderRadius: '16px',
+              boxShadow: 'var(--shadow-sm)',
+              border: '1px solid rgba(224, 216, 204, 0.9)',
             },
-            darkSquareStyle: { backgroundColor: '#769656' },
-            lightSquareStyle: { backgroundColor: '#eeeed2' },
+            darkSquareStyle: { backgroundColor: '#8aa091' },
+            lightSquareStyle: { backgroundColor: '#f1e9dd' },
           }}
         />
       </div>

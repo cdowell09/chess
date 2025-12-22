@@ -60,37 +60,76 @@ function App() {
     setScreen('start');
   }, []);
 
+  const handleGoHome = useCallback(() => {
+    setGameResult(null);
+    setScreen('start');
+  }, []);
+
+  const handleOpenSetup = useCallback(() => {
+    setGameMode('computer');
+    setGameResult(null);
+    setScreen('setup');
+  }, []);
+
+  const isStartScreen = screen === 'start';
+  const isSetupScreen = screen === 'setup';
+
   return (
     <div className="app">
-      {screen === 'start' && (
-        <StartScreen onSelectMode={handleSelectMode} />
-      )}
+      <header className="site-header">
+        <div className="brand" aria-label="Kids Chess">
+          <span className="brand-icon" aria-hidden="true">♞</span>
+          <span className="brand-text">Kids Chess</span>
+        </div>
+        <nav className="site-nav">
+          <button
+            className={`nav-link ${isStartScreen ? 'active' : ''}`}
+            onClick={handleGoHome}
+            aria-current={isStartScreen ? 'page' : undefined}
+          >
+            Main Menu
+          </button>
+          <button
+            className={`nav-link ${isSetupScreen ? 'active' : ''}`}
+            onClick={handleOpenSetup}
+            aria-current={isSetupScreen ? 'page' : undefined}
+          >
+            Setup
+          </button>
+        </nav>
+      </header>
 
-      {screen === 'setup' && (
-        <GameSetup onStart={handleStartGame} onBack={handleBack} />
-      )}
+      <main className="page">
+        {screen === 'start' && (
+          <StartScreen onSelectMode={handleSelectMode} />
+        )}
 
-      {screen === 'playing' && (
-        <>
-          <ChessGame
-            key={gameKey}
-            mode={gameMode}
-            playerColor={gameSettings.playerColor}
-            difficulty={gameSettings.difficulty}
-            onGameOver={handleGameOver}
-            onBack={handleBack}
-          />
-          {gameResult && (
-            <GameOverModal
-              result={gameResult}
-              playerColor={gameSettings.playerColor}
+        {screen === 'setup' && (
+          <GameSetup onStart={handleStartGame} onBack={handleBack} />
+        )}
+
+        {screen === 'playing' && (
+          <>
+            <ChessGame
+              key={gameKey}
               mode={gameMode}
-              onPlayAgain={handlePlayAgain}
-              onBackToMenu={handleBackToMenu}
+              playerColor={gameSettings.playerColor}
+              difficulty={gameSettings.difficulty}
+              onGameOver={handleGameOver}
+              onBack={handleBack}
             />
-          )}
-        </>
-      )}
+            {gameResult && (
+              <GameOverModal
+                result={gameResult}
+                playerColor={gameSettings.playerColor}
+                mode={gameMode}
+                onPlayAgain={handlePlayAgain}
+                onBackToMenu={handleBackToMenu}
+              />
+            )}
+          </>
+        )}
+      </main>
     </div>
   );
 }

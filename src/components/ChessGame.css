@@ -3,8 +3,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  padding: 16px;
+  min-height: 100%;
+  padding: 16px 0;
   box-sizing: border-box;
 }
 
@@ -18,36 +18,38 @@
 }
 
 .back-button {
-  background: #4a5568;
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-size: 18px;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--line);
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 16px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .back-button:hover {
-  background: #2d3748;
+  border-color: rgba(47, 124, 109, 0.4);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
 }
 
 .turn-indicator {
-  font-size: 20px;
-  font-weight: bold;
-  color: #2d3748;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
   text-align: center;
   flex: 1;
   margin: 0 16px;
 }
 
 .game-over-text {
-  color: #38a169;
-  font-size: 24px;
+  color: #2f7c6d;
+  font-size: 22px;
 }
 
 .check-warning {
-  color: #e53e3e;
+  color: #ca5544;
   animation: pulse 1s infinite;
 }
 
@@ -59,6 +61,11 @@
 .board-container {
   width: min(90vw, 90vh);
   max-width: 600px;
+  padding: 16px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(224, 216, 204, 0.8);
+  box-shadow: var(--shadow-sm);
 }
 
 .game-controls {
@@ -70,23 +77,23 @@
 }
 
 .control-button {
-  padding: 16px 32px;
-  font-size: 20px;
+  padding: 14px 28px;
+  font-size: 18px;
   border: none;
-  border-radius: 12px;
+  border-radius: 999px;
   cursor: pointer;
   transition: all 0.2s;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .undo-button {
-  background: #ed8936;
-  color: white;
+  background: #d28a54;
+  color: #f7f2e9;
 }
 
 .undo-button:hover:not(:disabled) {
-  background: #dd6b20;
-  transform: scale(1.05);
+  background: #c47b45;
+  transform: translateY(-1px);
 }
 
 .undo-button:disabled {
@@ -95,13 +102,13 @@
 }
 
 .new-game-button {
-  background: #48bb78;
-  color: white;
+  background: #1f2933;
+  color: #f7f2e9;
 }
 
 .new-game-button:hover {
-  background: #38a169;
-  transform: scale(1.05);
+  background: #11181f;
+  transform: translateY(-1px);
 }
 
 /* Mobile/Tablet optimizations */
@@ -124,7 +131,7 @@
   }
 
   .control-button {
-    padding: 14px 24px;
-    font-size: 18px;
+    padding: 12px 22px;
+    font-size: 16px;
   }
 }
