@@ -4,9 +4,9 @@ export function StartScreen({ onSelectMode }) {
   return (
     <div className="start-screen">
       <div className="hero">
-        <span className="eyebrow">Welcome</span>
+        <span className="eyebrow">No Ads. Just Chess.</span>
         <h1 className="title">Kids Chess</h1>
-        <p className="subtitle">Pick a mode and jump right in.</p>
+        <p className="subtitle">Pick a mode and start playing!</p>
       </div>
 
       <div className="mode-buttons">
