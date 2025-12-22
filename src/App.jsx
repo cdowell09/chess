@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { StartScreen } from './components/StartScreen';
 import { GameSetup } from './components/GameSetup';
 import { ChessGame } from './components/ChessGame';
@@ -6,6 +6,22 @@ import { GameOverModal } from './components/GameOverModal';
 import './App.css';
 
 function App() {
+  // Dark mode state with localStorage persistence
+  const [darkMode, setDarkMode] = useState(() => {
+    const saved = localStorage.getItem('darkMode');
+    return saved ? JSON.parse(saved) : false;
+  });
+
+  // Apply dark mode to document
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
+    localStorage.setItem('darkMode', JSON.stringify(darkMode));
+  }, [darkMode]);
+
+  const toggleDarkMode = useCallback(() => {
+    setDarkMode(prev => !prev);
+  }, []);
+
   // App state: 'start', 'setup', 'playing'
   const [screen, setScreen] = useState('start');
   const [gameMode, setGameMode] = useState(null); // 'computer' or 'friend'
@@ -95,6 +111,14 @@ function App() {
             aria-current={isSetupScreen ? 'page' : undefined}
           >
             Setup
+          </button>
+          <button
+            className="dark-mode-toggle"
+            onClick={toggleDarkMode}
+            aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+            title={darkMode ? 'Light mode' : 'Dark mode'}
+          >
+            {darkMode ? '☀️' : '🌙'}
           </button>
         </nav>
       </header>
