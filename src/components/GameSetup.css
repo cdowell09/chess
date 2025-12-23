@@ -81,7 +81,7 @@
 
 .white-button {
   background: #fbfbf7;
-  color: var(--text);
+  color: #2b2d33;
   box-shadow: var(--shadow-sm);
 }
 
