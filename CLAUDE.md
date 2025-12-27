@@ -72,3 +72,13 @@ Designed for Vercel deployment:
 npm run build
 npx vercel
 ```
+
+### Service Worker Cache
+
+The app uses a service worker (`public/sw.js`) for offline play. When deploying updates that change asset hashes, bump the `CACHE_NAME` version in `sw.js` to invalidate stale caches:
+
+```js
+const CACHE_NAME = 'kids-chess-v2'  // Increment on deploy
+```
+
+Without this, users may get cached HTML referencing old JS files that no longer exist.
