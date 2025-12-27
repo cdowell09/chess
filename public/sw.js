@@ -1,6 +1,6 @@
 /* Service worker for offline play (PWA-lite, no build plugins required). */
 
-const CACHE_NAME = 'kids-chess-v1'
+const CACHE_NAME = 'kids-chess-v2'
 
 const CORE_URLS = [
   '/',
