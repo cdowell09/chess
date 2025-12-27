@@ -41,6 +41,17 @@ Open http://localhost:5173 in your browser.
 npm run build
 ```
 
+### Offline Mode (Android / Airplane)
+
+This app includes a simple service worker + web app manifest so it can be used offline after it’s been opened once.
+
+1. Deploy the site (HTTPS recommended; Vercel works great).
+2. On the tablet, open the site **once while online** and wait a few seconds.
+3. In Chrome: **Menu → Add to Home screen** (or “Install app” if prompted).
+4. Before the flight, switch the tablet to airplane mode and open the app from the home screen.
+
+Tip: To verify locally after a production build, run `npm run preview`, open the app, then use Chrome DevTools → Network → “Offline” and refresh.
+
 ### Deploy to Vercel
 
 ```bash
