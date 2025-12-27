@@ -154,7 +154,7 @@
 
 .start-button {
   background: var(--text);
-  color: #f7f2e9;
+  color: var(--bg-primary);
   border: none;
   padding: 16px 48px;
   font-size: 20px;
