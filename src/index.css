@@ -1,8 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Space+Grotesk:wght@400;500;600&display=swap');
-
 :root {
-  --font-display: 'Fraunces', 'Times New Roman', serif;
-  --font-body: 'Space Grotesk', 'Trebuchet MS', sans-serif;
+  --font-display: ui-serif, 'Times New Roman', serif;
+  --font-body: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Trebuchet MS', sans-serif;
   --text: #1f2933;
   --muted: #5b6775;
   --line: #e0d8cc;
