@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { playSound } from '../utils/sounds';
+import { UnicornFlyby } from './UnicornFlyby';
 import './GameOverModal.css';
 
 export function GameOverModal({ result, playerColor, mode, onPlayAgain, onBackToMenu }) {
@@ -36,6 +37,7 @@ export function GameOverModal({ result, playerColor, mode, onPlayAgain, onBackTo
 
   return (
     <div className="modal-overlay">
+      {playerWon && <UnicornFlyby />}
       <div className={`game-over-modal ${playerWon ? 'winner' : ''}`}>
         <div className="celebration-emoji">{emoji}</div>
         <h1 className="modal-title">{title}</h1>

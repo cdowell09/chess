@@ -1,0 +1,62 @@
+.unicorn-flyby {
+  position: fixed;
+  top: 12vh;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  z-index: 1100;
+  pointer-events: none;
+
+  animation: unicornFlyAcross 4s ease-in-out both;
+  will-change: transform;
+}
+
+.unicorn-emoji {
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 56px;
+  line-height: 1;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 10px 12px rgba(0, 0, 0, 0.18));
+}
+
+.unicorn-rainbow {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 260px;
+  height: 18px;
+  transform: translate(-290px, -50%);
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    #ff3b30 0%,
+    #ff9500 16%,
+    #ffcc00 32%,
+    #34c759 48%,
+    #007aff 64%,
+    #5856d6 80%,
+    #af52de 100%
+  );
+  filter: blur(0.2px) drop-shadow(0 8px 12px rgba(0, 0, 0, 0.12));
+  opacity: 0.95;
+}
+
+@keyframes unicornFlyAcross {
+  0% {
+    transform: translateX(-30vw) translateY(0) scale(0.95);
+  }
+  20% {
+    transform: translateX(0vw) translateY(-10px) scale(1);
+  }
+  45% {
+    transform: translateX(35vw) translateY(6px) scale(1);
+  }
+  70% {
+    transform: translateX(70vw) translateY(-8px) scale(1);
+  }
+  100% {
+    transform: translateX(130vw) translateY(0) scale(0.98);
+  }
+}
