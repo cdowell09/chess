@@ -1,0 +1,373 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-23T14:06:37Z",
+  "title": "Design System: Kids Chess",
+  "extensions": {
+    "colorMeta": {
+      "slate-ink": {
+        "role": "neutral",
+        "displayName": "Slate Ink",
+        "canonical": "#1f2933",
+        "tonalRamp": ["oklch(15% 0.023 248.7)", "oklch(27% 0.023 248.7)", "oklch(39% 0.023 248.7)", "oklch(51% 0.023 248.7)", "oklch(63% 0.023 248.7)", "oklch(75% 0.023 248.7)", "oklch(87% 0.023 248.7)", "oklch(95% 0.023 248.7)"]
+      },
+      "parchment": {
+        "role": "neutral",
+        "displayName": "Parchment",
+        "canonical": "#f7f4ee",
+        "tonalRamp": ["oklch(15% 0.009 84.6)", "oklch(27% 0.009 84.6)", "oklch(39% 0.009 84.6)", "oklch(51% 0.009 84.6)", "oklch(63% 0.009 84.6)", "oklch(75% 0.009 84.6)", "oklch(87% 0.009 84.6)", "oklch(95% 0.009 84.6)"]
+      },
+      "paper-card": {
+        "role": "neutral",
+        "displayName": "Paper Card",
+        "canonical": "rgba(255, 255, 255, 0.9)",
+        "tonalRamp": ["oklch(15% 0.000 89.9 / 0.9)", "oklch(27% 0.000 89.9 / 0.9)", "oklch(39% 0.000 89.9 / 0.9)", "oklch(51% 0.000 89.9 / 0.9)", "oklch(63% 0.000 89.9 / 0.9)", "oklch(75% 0.000 89.9 / 0.9)", "oklch(87% 0.000 89.9 / 0.9)", "oklch(95% 0.000 89.9 / 0.9)"]
+      },
+      "frosted-header": {
+        "role": "neutral",
+        "displayName": "Frosted Header",
+        "canonical": "rgba(247, 244, 238, 0.8)",
+        "tonalRamp": ["oklch(15% 0.009 84.6 / 0.8)", "oklch(27% 0.009 84.6 / 0.8)", "oklch(39% 0.009 84.6 / 0.8)", "oklch(51% 0.009 84.6 / 0.8)", "oklch(63% 0.009 84.6 / 0.8)", "oklch(75% 0.009 84.6 / 0.8)", "oklch(87% 0.009 84.6 / 0.8)", "oklch(95% 0.009 84.6 / 0.8)"]
+      },
+      "muted-slate": {
+        "role": "neutral",
+        "displayName": "Muted Slate",
+        "canonical": "#5b6775",
+        "tonalRamp": ["oklch(15% 0.027 252.4)", "oklch(27% 0.027 252.4)", "oklch(39% 0.027 252.4)", "oklch(51% 0.027 252.4)", "oklch(63% 0.027 252.4)", "oklch(75% 0.027 252.4)", "oklch(87% 0.027 252.4)", "oklch(95% 0.027 252.4)"]
+      },
+      "linen-line": {
+        "role": "neutral",
+        "displayName": "Linen Line",
+        "canonical": "#e0d8cc",
+        "tonalRamp": ["oklch(15% 0.018 78.2)", "oklch(27% 0.018 78.2)", "oklch(39% 0.018 78.2)", "oklch(51% 0.018 78.2)", "oklch(63% 0.018 78.2)", "oklch(75% 0.018 78.2)", "oklch(87% 0.018 78.2)", "oklch(95% 0.018 78.2)"]
+      },
+      "felt-green": {
+        "role": "primary",
+        "displayName": "Felt Green",
+        "canonical": "#2f7c6d",
+        "tonalRamp": ["oklch(15% 0.079 178.0)", "oklch(27% 0.079 178.0)", "oklch(39% 0.079 178.0)", "oklch(51% 0.079 178.0)", "oklch(63% 0.079 178.0)", "oklch(75% 0.079 178.0)", "oklch(87% 0.079 178.0)", "oklch(95% 0.079 178.0)"]
+      },
+      "takeback-amber": {
+        "role": "secondary",
+        "displayName": "Takeback Amber",
+        "canonical": "#d28a54",
+        "tonalRamp": ["oklch(15% 0.113 56.5)", "oklch(27% 0.113 56.5)", "oklch(39% 0.113 56.5)", "oklch(51% 0.113 56.5)", "oklch(63% 0.113 56.5)", "oklch(75% 0.113 56.5)", "oklch(87% 0.113 56.5)", "oklch(95% 0.113 56.5)"]
+      },
+      "check-red": {
+        "role": "tertiary",
+        "displayName": "Check Red",
+        "canonical": "#ca5544",
+        "tonalRamp": ["oklch(15% 0.153 30.5)", "oklch(27% 0.153 30.5)", "oklch(39% 0.153 30.5)", "oklch(51% 0.153 30.5)", "oklch(63% 0.153 30.5)", "oklch(75% 0.153 30.5)", "oklch(87% 0.153 30.5)", "oklch(95% 0.153 30.5)"]
+      },
+      "board-sage": {
+        "role": "primary",
+        "displayName": "Board Sage",
+        "canonical": "#8aa091",
+        "tonalRamp": ["oklch(15% 0.033 155.6)", "oklch(27% 0.033 155.6)", "oklch(39% 0.033 155.6)", "oklch(51% 0.033 155.6)", "oklch(63% 0.033 155.6)", "oklch(75% 0.033 155.6)", "oklch(87% 0.033 155.6)", "oklch(95% 0.033 155.6)"]
+      },
+      "board-ivory": {
+        "role": "neutral",
+        "displayName": "Board Ivory",
+        "canonical": "#f1e9dd",
+        "tonalRamp": ["oklch(15% 0.018 78.2)", "oklch(27% 0.018 78.2)", "oklch(39% 0.018 78.2)", "oklch(51% 0.018 78.2)", "oklch(63% 0.018 78.2)", "oklch(75% 0.018 78.2)", "oklch(87% 0.018 78.2)", "oklch(95% 0.018 78.2)"]
+      },
+      "warm-cream": {
+        "role": "neutral",
+        "displayName": "Warm Cream",
+        "canonical": "#f7f2e9",
+        "tonalRamp": ["oklch(15% 0.013 82.4)", "oklch(27% 0.013 82.4)", "oklch(39% 0.013 82.4)", "oklch(51% 0.013 82.4)", "oklch(63% 0.013 82.4)", "oklch(75% 0.013 82.4)", "oklch(87% 0.013 82.4)", "oklch(95% 0.013 82.4)"]
+      },
+      "night-canvas": {
+        "role": "neutral",
+        "displayName": "Night Canvas",
+        "canonical": "#1a1d23",
+        "tonalRamp": ["oklch(15% 0.012 264.3)", "oklch(27% 0.012 264.3)", "oklch(39% 0.012 264.3)", "oklch(51% 0.012 264.3)", "oklch(63% 0.012 264.3)", "oklch(75% 0.012 264.3)", "oklch(87% 0.012 264.3)", "oklch(95% 0.012 264.3)"]
+      },
+      "night-panel": {
+        "role": "neutral",
+        "displayName": "Night Panel",
+        "canonical": "rgba(45, 50, 58, 0.9)",
+        "tonalRamp": ["oklch(15% 0.016 259.8 / 0.9)", "oklch(27% 0.016 259.8 / 0.9)", "oklch(39% 0.016 259.8 / 0.9)", "oklch(51% 0.016 259.8 / 0.9)", "oklch(63% 0.016 259.8 / 0.9)", "oklch(75% 0.016 259.8 / 0.9)", "oklch(87% 0.016 259.8 / 0.9)", "oklch(95% 0.016 259.8 / 0.9)"]
+      },
+      "night-header": {
+        "role": "neutral",
+        "displayName": "Night Header",
+        "canonical": "rgba(26, 29, 35, 0.9)",
+        "tonalRamp": ["oklch(15% 0.012 264.3 / 0.9)", "oklch(27% 0.012 264.3 / 0.9)", "oklch(39% 0.012 264.3 / 0.9)", "oklch(51% 0.012 264.3 / 0.9)", "oklch(63% 0.012 264.3 / 0.9)", "oklch(75% 0.012 264.3 / 0.9)", "oklch(87% 0.012 264.3 / 0.9)", "oklch(95% 0.012 264.3 / 0.9)"]
+      },
+      "night-text": {
+        "role": "neutral",
+        "displayName": "Night Text",
+        "canonical": "#e8e6e3",
+        "tonalRamp": ["oklch(15% 0.005 78.3)", "oklch(27% 0.005 78.3)", "oklch(39% 0.005 78.3)", "oklch(51% 0.005 78.3)", "oklch(63% 0.005 78.3)", "oklch(75% 0.005 78.3)", "oklch(87% 0.005 78.3)", "oklch(95% 0.005 78.3)"]
+      },
+      "night-muted": {
+        "role": "neutral",
+        "displayName": "Night Muted",
+        "canonical": "#9ca3af",
+        "tonalRamp": ["oklch(15% 0.019 261.3)", "oklch(27% 0.019 261.3)", "oklch(39% 0.019 261.3)", "oklch(51% 0.019 261.3)", "oklch(63% 0.019 261.3)", "oklch(75% 0.019 261.3)", "oklch(87% 0.019 261.3)", "oklch(95% 0.019 261.3)"]
+      },
+      "night-line": {
+        "role": "neutral",
+        "displayName": "Night Line",
+        "canonical": "#3d4654",
+        "tonalRamp": ["oklch(15% 0.027 259.2)", "oklch(27% 0.027 259.2)", "oklch(39% 0.027 259.2)", "oklch(51% 0.027 259.2)", "oklch(63% 0.027 259.2)", "oklch(75% 0.027 259.2)", "oklch(87% 0.027 259.2)", "oklch(95% 0.027 259.2)"]
+      },
+      "night-mint": {
+        "role": "primary",
+        "displayName": "Night Mint",
+        "canonical": "#4ade9a",
+        "tonalRamp": ["oklch(15% 0.159 159.3)", "oklch(27% 0.159 159.3)", "oklch(39% 0.159 159.3)", "oklch(51% 0.159 159.3)", "oklch(63% 0.159 159.3)", "oklch(75% 0.159 159.3)", "oklch(87% 0.159 159.3)", "oklch(95% 0.159 159.3)"]
+      },
+      "disabled-cloud": {
+        "role": "neutral",
+        "displayName": "Disabled Cloud",
+        "canonical": "#cbd5e0",
+        "tonalRamp": ["oklch(15% 0.019 250.6)", "oklch(27% 0.019 250.6)", "oklch(39% 0.019 250.6)", "oklch(51% 0.019 250.6)", "oklch(63% 0.019 250.6)", "oklch(75% 0.019 250.6)", "oklch(87% 0.019 250.6)", "oklch(95% 0.019 250.6)"]
+      },
+      "disabled-slate": {
+        "role": "neutral",
+        "displayName": "Disabled Slate",
+        "canonical": "#4a5568",
+        "tonalRamp": ["oklch(15% 0.034 261.3)", "oklch(27% 0.034 261.3)", "oklch(39% 0.034 261.3)", "oklch(51% 0.034 261.3)", "oklch(63% 0.034 261.3)", "oklch(75% 0.034 261.3)", "oklch(87% 0.034 261.3)", "oklch(95% 0.034 261.3)"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "The start-screen product title only."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Setup and major task headings."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Mode names and prominent component labels."
+      },
+      "body-lg": {
+        "displayName": "Body Large",
+        "purpose": "Introductory guidance and short subtitles."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Descriptions and supporting instructions."
+      },
+      "control": {
+        "displayName": "Control",
+        "purpose": "Primary game and dialog actions."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Navigation and compact utility labels."
+      },
+      "eyebrow": {
+        "displayName": "Eyebrow",
+        "purpose": "The single uppercase trust promise above the start title."
+      }
+    },
+    "shadows": [
+      {
+        "name": "ambient-low",
+        "value": "0 12px 24px rgba(31, 41, 51, 0.08)",
+        "purpose": "Resting cards, setup panels, and the board frame."
+      },
+      {
+        "name": "ambient-high",
+        "value": "0 18px 40px rgba(31, 41, 51, 0.14)",
+        "purpose": "Primary actions, dialogs, and hovered action cards."
+      },
+      {
+        "name": "dark-ambient-low",
+        "value": "0 12px 24px rgba(0, 0, 0, 0.2)",
+        "purpose": "Dark-theme resting surfaces."
+      },
+      {
+        "name": "dark-ambient-high",
+        "value": "0 18px 40px rgba(0, 0, 0, 0.3)",
+        "purpose": "Dark-theme elevated and interactive surfaces."
+      },
+      {
+        "name": "selection-halo",
+        "value": "0 0 0 3px rgba(47, 124, 109, 0.2)",
+        "purpose": "The selected color choice."
+      }
+    ],
+    "motion": [
+      {
+        "name": "quick-select",
+        "value": "150ms ease",
+        "purpose": "Difficulty selection and other immediate local state."
+      },
+      {
+        "name": "standard",
+        "value": "200ms ease",
+        "purpose": "Button, border, shadow, and lift feedback."
+      },
+      {
+        "name": "theme-shift",
+        "value": "300ms ease",
+        "purpose": "Light and dark surface transitions."
+      },
+      {
+        "name": "dialog-enter",
+        "value": "400ms ease-out",
+        "purpose": "Game-over dialog entrance."
+      },
+      {
+        "name": "celebration-flyby",
+        "value": "4s ease-in-out",
+        "purpose": "Winner-only unicorn flyby."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "mobile-components",
+        "value": "600px"
+      },
+      {
+        "name": "stacked-header",
+        "value": "720px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The single strong action that advances setup or replay.",
+      "html": "<button class=\"ds-btn-primary\">Start Game!</button>",
+      "css": ".ds-btn-primary { font-family: var(--font-body, ui-sans-serif, system-ui, sans-serif); background: var(--text, #1f2933); color: var(--bg-primary, #f7f4ee); border: 0; border-radius: 999px; padding: 16px 48px; font-size: 20px; font-weight: 600; box-shadow: var(--shadow, 0 18px 40px rgba(31, 41, 51, 0.14)); cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; } .ds-btn-primary:hover { transform: translateY(-2px); } .ds-btn-primary:active { transform: translateY(0); } .ds-btn-primary:focus-visible { outline: revert; outline-offset: 3px; }"
+    },
+    {
+      "name": "Ghost Back Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "A quiet pill for backing out of the current task.",
+      "html": "<button class=\"ds-btn-ghost\">← Back</button>",
+      "css": ".ds-btn-ghost { font-family: var(--font-body, ui-sans-serif, system-ui, sans-serif); background: transparent; color: var(--text, #1f2933); border: 1px solid var(--line, #e0d8cc); border-radius: 999px; padding: 10px 16px; font-size: 16px; cursor: pointer; transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease; } .ds-btn-ghost:hover { border-color: rgba(47, 124, 109, 0.4); box-shadow: var(--shadow-sm, 0 12px 24px rgba(31, 41, 51, 0.08)); transform: translateY(-1px); } .ds-btn-ghost:active { transform: translateY(0); } .ds-btn-ghost:focus-visible { outline: revert; outline-offset: 3px; }"
+    },
+    {
+      "name": "Mode Card",
+      "kind": "card",
+      "refersTo": "card-action",
+      "description": "A large, descriptive mode choice for the start screen.",
+      "html": "<button class=\"ds-mode-card\"><span class=\"ds-mode-head\"><span class=\"ds-mode-icon\" aria-hidden=\"true\">🤖</span><span class=\"ds-mode-title\">Play vs Computer</span></span><span class=\"ds-mode-copy\">Practice against an AI with adjustable difficulty.</span></button>",
+      "css": ".ds-mode-card { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; min-height: 180px; padding: 28px; border: 1px solid var(--line, #e0d8cc); border-radius: 20px; background: var(--bg-card, rgba(255, 255, 255, 0.9)); color: var(--text, #1f2933); box-shadow: var(--shadow-sm, 0 12px 24px rgba(31, 41, 51, 0.08)); text-align: left; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; } .ds-mode-card:hover { transform: translateY(-4px); box-shadow: var(--shadow, 0 18px 40px rgba(31, 41, 51, 0.14)); border-color: rgba(47, 124, 109, 0.35); } .ds-mode-card:active { transform: translateY(-1px); } .ds-mode-card:focus-visible { outline: revert; outline-offset: 3px; } .ds-mode-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; } .ds-mode-icon { font-size: 40px; } .ds-mode-title { font: 600 22px/1.5 var(--font-body, ui-sans-serif, system-ui, sans-serif); } .ds-mode-copy { color: var(--muted, #5b6775); font: 400 16px/1.5 var(--font-body, ui-sans-serif, system-ui, sans-serif); }"
+    },
+    {
+      "name": "Setup Panel",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "A softly contained group for one setup decision.",
+      "html": "<section class=\"ds-setup-panel\"><h2>Choose Your Color</h2><p>White goes first. Black goes second.</p></section>",
+      "css": ".ds-setup-panel { width: min(560px, 100%); padding: 24px; border: 1px solid var(--line, #e0d8cc); border-radius: 20px; background: var(--bg-card, rgba(255, 255, 255, 0.9)); color: var(--text, #1f2933); box-shadow: var(--shadow-sm, 0 12px 24px rgba(31, 41, 51, 0.08)); text-align: center; } .ds-setup-panel h2 { margin: 0 0 12px; font: 600 20px/1.5 var(--font-body, ui-sans-serif, system-ui, sans-serif); } .ds-setup-panel p { margin: 0; color: var(--muted, #5b6775); font: 400 16px/1.5 var(--font-body, ui-sans-serif, system-ui, sans-serif); }"
+    },
+    {
+      "name": "Difficulty Scale",
+      "kind": "chip",
+      "refersTo": "difficulty-control",
+      "description": "Ten circular choices that progress from forgiving green to challenging red.",
+      "html": "<div class=\"ds-difficulty\" aria-label=\"Difficulty\"><button style=\"--ds-level:#4fa88b\">1</button><button style=\"--ds-level:#6ca17f\">2</button><button class=\"ds-selected\" style=\"--ds-level:#899b73\">3</button><button style=\"--ds-level:#a69466\">4</button><button style=\"--ds-level:#c38d5a\">5</button><button style=\"--ds-level:#d18452\">6</button><button style=\"--ds-level:#cf784f\">7</button><button style=\"--ds-level:#ce6d4b\">8</button><button style=\"--ds-level:#cc6148\">9</button><button style=\"--ds-level:#ca5544\">10</button></div>",
+      "css": ".ds-difficulty { display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; } .ds-difficulty button { width: 40px; height: 40px; padding: 0; border: 2px solid var(--ds-level); border-radius: 50%; background: var(--bg-card, rgba(255, 255, 255, 0.9)); color: var(--ds-level); font: 600 16px/1 var(--font-body, ui-sans-serif, system-ui, sans-serif); cursor: pointer; transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease; } .ds-difficulty button:hover, .ds-difficulty .ds-selected { background: var(--ds-level); color: #fff; transform: scale(1.05); } .ds-difficulty .ds-selected { box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1); } .ds-difficulty button:active { transform: scale(1); } .ds-difficulty button:focus-visible { outline: revert; outline-offset: 2px; }"
+    },
+    {
+      "name": "Header Navigation",
+      "kind": "nav",
+      "refersTo": "navigation",
+      "description": "The sticky brand bar with compact pill navigation and appearance control.",
+      "html": "<nav class=\"ds-nav\"><span class=\"ds-brand\"><span class=\"ds-brand-icon\" aria-hidden=\"true\">♞</span><span>Kids Chess</span></span><span class=\"ds-nav-actions\"><button class=\"ds-nav-active\">Main Menu</button><button>Setup</button><button class=\"ds-theme\" aria-label=\"Switch theme\">🌙</button></span></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px 48px; border-bottom: 1px solid var(--line, #e0d8cc); background: var(--bg-header, rgba(247, 244, 238, 0.8)); color: var(--text, #1f2933); backdrop-filter: blur(10px); } .ds-brand { display: flex; align-items: center; gap: 12px; font: 600 20px/1.5 var(--font-display, ui-serif, 'Times New Roman', serif); } .ds-brand-icon { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 12px; background: var(--brand-bg, #1f2933); color: var(--brand-text, #f7f2e9); font-size: 18px; } .ds-nav-actions { display: flex; align-items: center; gap: 12px; } .ds-nav button { border: 1px solid var(--line, #e0d8cc); border-radius: 999px; background: transparent; color: var(--text, #1f2933); padding: 8px 16px; font: 600 14px/1.5 var(--font-body, ui-sans-serif, system-ui, sans-serif); cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; } .ds-nav button:hover { border-color: rgba(47, 124, 109, 0.4); box-shadow: var(--shadow-sm, 0 12px 24px rgba(31, 41, 51, 0.08)); transform: translateY(-1px); } .ds-nav .ds-nav-active { background: var(--bg-card, rgba(255, 255, 255, 0.9)); border-color: rgba(31, 41, 51, 0.5); box-shadow: var(--shadow-sm, 0 12px 24px rgba(31, 41, 51, 0.08)); } .ds-nav .ds-theme { width: 40px; height: 40px; padding: 0; } .ds-nav button:focus-visible { outline: revert; outline-offset: 3px; }"
+    },
+    {
+      "name": "Game Controls",
+      "kind": "custom",
+      "refersTo": "button-game",
+      "description": "The paired recoverable and reset actions beneath the board.",
+      "html": "<div class=\"ds-game-controls\"><button class=\"ds-undo\">↩ Undo</button><button class=\"ds-new-game\">🔄 New Game</button></div>",
+      "css": ".ds-game-controls { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; } .ds-game-controls button { padding: 14px 28px; border: 0; border-radius: 999px; color: #f7f2e9; font: 600 18px/1.5 var(--font-body, ui-sans-serif, system-ui, sans-serif); cursor: pointer; transition: transform 0.2s ease, background 0.2s ease; } .ds-game-controls button:hover { transform: translateY(-1px); } .ds-game-controls button:active { transform: translateY(0); } .ds-game-controls button:focus-visible { outline: revert; outline-offset: 3px; } .ds-undo { background: #d28a54; } .ds-undo:hover { background: #c47b45; } .ds-new-game { background: #1f2933; } .ds-new-game:hover { background: #11181f; }"
+    },
+    {
+      "name": "Game Over Dialog",
+      "kind": "custom",
+      "refersTo": "dialog",
+      "description": "The focused outcome surface where playfulness and celebration are allowed to peak.",
+      "html": "<section class=\"ds-dialog\"><div class=\"ds-dialog-emoji\" aria-hidden=\"true\">🏆</div><h2>You Win!</h2><p>Amazing! You beat the computer!</p><button>🔄 Play Again</button></section>",
+      "css": ".ds-dialog { width: min(400px, 100%); padding: 40px; border: 1px solid var(--line, #e0d8cc); border-radius: 28px; background: var(--bg-card, rgba(255, 255, 255, 0.9)); color: var(--text, #1f2933); box-shadow: var(--shadow, 0 18px 40px rgba(31, 41, 51, 0.14)); text-align: center; } .ds-dialog-emoji { margin-bottom: 16px; font-size: 72px; } .ds-dialog h2 { margin: 0 0 8px; color: #2f7c6d; font: 700 32px/1.5 var(--font-display, ui-serif, 'Times New Roman', serif); } .ds-dialog p { margin: 0 0 32px; color: var(--muted, #5b6775); font: 400 18px/1.5 var(--font-body, ui-sans-serif, system-ui, sans-serif); } .ds-dialog button { width: 100%; padding: 14px 28px; border: 0; border-radius: 999px; background: var(--brand-bg, #1f2933); color: var(--brand-text, #f7f2e9); font: 600 18px/1.5 var(--font-body, ui-sans-serif, system-ui, sans-serif); cursor: pointer; transition: transform 0.2s ease; } .ds-dialog button:hover { transform: translateY(-1px); } .ds-dialog button:active { transform: translateY(0); } .ds-dialog button:focus-visible { outline: revert; outline-offset: 3px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Friendly Chess Club",
+    "overview": "The Friendly Chess Club treats a family tablet like a welcoming game table: warm parchment, slate ink, and restrained felt green create a calm place to play. A traditional serif voice gives chess its sense of occasion, while direct system sans-serif text keeps every choice legible and immediate for young children.\n\nInterfaces are spacious, centered, and softly contained. Large touch targets feel tactile and forgiving without becoming toy-like. The system stays warm, calm, capable, and playful in moments—never babyish. Magic is deliberately concentrated in wins and encouragement so gameplay itself remains focused.",
+    "keyCharacteristics": [
+      "Warm parchment and slate neutrals anchored by restrained felt green.",
+      "Traditional serif display type paired with highly legible system sans-serif controls.",
+      "Rounded, tactile controls and softly layered containers sized for young hands.",
+      "Calm gameplay surfaces with celebratory emoji and motion reserved for rewards.",
+      "Parallel light and dark themes that preserve semantic roles."
+    ],
+    "rules": [
+      {
+        "name": "The Calm Field Rule",
+        "body": "Felt Green is an accent, not a wash; the board and surrounding canvas stay quiet enough for chess state to lead.",
+        "section": "colors"
+      },
+      {
+        "name": "The State Color Rule",
+        "body": "Amber means recoverable action and red means chess danger; never reuse either as casual decoration.",
+        "section": "colors"
+      },
+      {
+        "name": "The Theme Parity Rule",
+        "body": "Dark mode changes luminance, not hierarchy, meaning, or component behavior.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two-Voice Rule",
+        "body": "Serif type names important moments; sans-serif type operates the product. Do not introduce a third voice.",
+        "section": "typography"
+      },
+      {
+        "name": "The One-Task Center Rule",
+        "body": "Give the active choice or chessboard the visual center; surrounding navigation stays secondary.",
+        "section": "layout"
+      },
+      {
+        "name": "The Tablet-First Rule",
+        "body": "Size and space interactions for young hands, and never require precise dragging to complete a core action.",
+        "section": "layout"
+      },
+      {
+        "name": "The Soft Lift Rule",
+        "body": "Surfaces rest on borders and low shadow; high shadow and upward movement appear only when hierarchy or interaction earns them.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Rounded Hierarchy Rule",
+        "body": "Radius grows with containment and importance; do not mix sharp rectangles into the established 12–28px family.",
+        "section": "shapes"
+      },
+      {
+        "name": "The Rewarded Whimsy Rule",
+        "body": "Keep routine gameplay calm; reserve animated emoji, rainbow effects, and larger gestures for wins and encouragement.",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "Do use large, unmistakable targets and preserve tap-tap interaction.",
+      "Do let Parchment, Slate Ink, and Paper Card carry most of every screen.",
+      "Do reserve Felt Green for meaningful interaction and positive emphasis.",
+      "Do preserve the same semantic color roles in light and dark themes.",
+      "Do use low shadow at rest and high shadow only for priority or response.",
+      "Do keep routine transitions between 150ms and 300ms, with longer motion reserved for dialogs and celebrations."
+    ],
+    "donts": [
+      "Don't turn the product into a neon arcade, preschool toy, or corporate dashboard.",
+      "Don't flood screens with primary colors or distribute whimsical decoration across routine gameplay.",
+      "Don't repurpose Takeback Amber or Check Red as decorative accents.",
+      "Don't add sharp-cornered cards or a third type family.",
+      "Don't use heavy shadows or large movement on every control.",
+      "Don't rely on animation, sound, or color alone to communicate game state."
+    ]
+  }
+}

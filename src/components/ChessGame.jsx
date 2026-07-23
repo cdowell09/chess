@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { Chessboard } from 'react-chessboard';
 import { Chess } from 'chess.js';
 import { useChessGame } from '../hooks/useChessGame';
@@ -18,7 +18,6 @@ export function ChessGame({
     turn,
     isGameOver,
     isCheck,
-    isCheckmate,
     gameResult,
     getLegalMoves,
     getThreatenedSquares,
@@ -29,31 +28,44 @@ export function ChessGame({
     canUndo,
   } = useChessGame();
 
-  const { isReady: stockfishReady, isThinking, getBestMove } = useStockfish(difficulty);
+  const {
+    isReady: stockfishReady,
+    isThinking,
+    getBestMove,
+    stopThinking,
+  } = useStockfish(difficulty);
 
   const [selectedSquare, setSelectedSquare] = useState(null);
   const [legalMoves, setLegalMoves] = useState([]);
   const [lastMove, setLastMove] = useState(null);
+  const computerMoveIdRef = useRef(0);
+  const boardRegionRef = useRef(null);
 
   // Is it the player's turn? (in friend mode, always true for current player)
   const isPlayerTurn = mode === 'friend' || turn === playerColor;
   const isComputerTurn = mode === 'computer' && turn !== playerColor && !isGameOver;
 
   // Get threatened squares for highlighting
-  const threatenedSquares = useMemo(() => getThreatenedSquares(), [position, getThreatenedSquares]);
+  const threatenedSquares = useMemo(() => getThreatenedSquares(), [getThreatenedSquares]);
 
   // Computer makes a move
   useEffect(() => {
     if (!isComputerTurn || isGameOver) return;
 
+    const moveId = ++computerMoveIdRef.current;
+    let cancelled = false;
+    const requestIsStale = () => cancelled || moveId !== computerMoveIdRef.current;
+
     const makeComputerMove = async () => {
       // Add a small delay so kids can see what happened
       await new Promise(resolve => setTimeout(resolve, 500));
+      if (requestIsStale()) return;
 
       let bestMove = null;
 
       if (stockfishReady) {
         bestMove = await getBestMove(position);
+        if (requestIsStale()) return;
       }
 
       // Fallback to random move if Stockfish didn't return anything
@@ -69,7 +81,7 @@ export function ChessGame({
         }
       }
 
-      if (bestMove) {
+      if (bestMove && !requestIsStale()) {
         const from = bestMove.substring(0, 2);
         const to = bestMove.substring(2, 4);
         const promotion = bestMove.length > 4 ? bestMove[4] : 'q';
@@ -79,7 +91,7 @@ export function ChessGame({
           setLastMove({ from, to });
           // Play appropriate sound
           if (result.isCheckmate) {
-            playSound('win');
+            playSound('check');
           } else if (result.isCheck) {
             playSound('check');
           } else if (result.captured) {
@@ -92,7 +104,15 @@ export function ChessGame({
     };
 
     makeComputerMove();
-  }, [isComputerTurn, isGameOver, position, stockfishReady, getBestMove, makeMove]);
+
+    return () => {
+      cancelled = true;
+      if (computerMoveIdRef.current === moveId) {
+        computerMoveIdRef.current += 1;
+      }
+      stopThinking();
+    };
+  }, [isComputerTurn, isGameOver, position, stockfishReady, getBestMove, makeMove, stopThinking]);
 
   // Handle game over
   useEffect(() => {
@@ -137,6 +157,77 @@ export function ChessGame({
     }
   }, [selectedSquare, legalMoves, isPlayerTurn, isGameOver, isThinking, getLegalMoves, makeMove]);
 
+  // Give the board's square elements useful keyboard and screen-reader behavior.
+  useEffect(() => {
+    const boardElement = boardRegionRef.current;
+    if (!boardElement) return;
+
+    const currentGame = new Chess(position);
+    const pieceNames = {
+      p: 'pawn',
+      n: 'knight',
+      b: 'bishop',
+      r: 'rook',
+      q: 'queen',
+      k: 'king',
+    };
+    const listeners = [];
+
+    boardElement.querySelectorAll('[data-square]').forEach((squareElement) => {
+      const square = squareElement.dataset.square;
+      const piece = currentGame.get(square);
+      const isSelectable = piece && getLegalMoves(square).length > 0;
+      const isDestination = selectedSquare && legalMoves.includes(square);
+      const isKeyboardTarget = isPlayerTurn
+        && !isGameOver
+        && !isThinking
+        && (isDestination || selectedSquare === square || (!selectedSquare && isSelectable));
+      const pieceLabel = piece
+        ? `, ${piece.color === 'w' ? 'white' : 'black'} ${pieceNames[piece.type]}`
+        : ', empty';
+      const stateLabel = selectedSquare === square
+        ? ', selected'
+        : isDestination
+          ? ', legal destination'
+          : '';
+
+      squareElement.setAttribute('role', 'button');
+      squareElement.setAttribute('tabindex', isKeyboardTarget ? '0' : '-1');
+      squareElement.setAttribute('aria-disabled', String(!isKeyboardTarget));
+      squareElement.setAttribute('aria-label', `${square}${pieceLabel}${stateLabel}`);
+
+      squareElement.querySelectorAll('button').forEach((pieceButton) => {
+        pieceButton.setAttribute('aria-hidden', 'true');
+        pieceButton.setAttribute('tabindex', '-1');
+      });
+
+      const handleKeyDown = (event) => {
+        if (isKeyboardTarget && (event.key === 'Enter' || event.key === ' ')) {
+          event.preventDefault();
+          handleSquareClick(square);
+        }
+      };
+
+      squareElement.addEventListener('keydown', handleKeyDown);
+      listeners.push([squareElement, handleKeyDown]);
+    });
+
+    return () => {
+      listeners.forEach(([squareElement, handleKeyDown]) => {
+        squareElement.removeEventListener('keydown', handleKeyDown);
+      });
+    };
+  }, [
+    position,
+    selectedSquare,
+    legalMoves,
+    isPlayerTurn,
+    isGameOver,
+    isThinking,
+    getLegalMoves,
+    handleSquareClick,
+  ]);
+
   // Wrapper for react-chessboard's onSquareClick (receives object)
   const onSquareClick = useCallback(({ square }) => {
     handleSquareClick(square);
@@ -148,7 +239,7 @@ export function ChessGame({
   }, [handleSquareClick]);
 
   // Handle piece drag (optional, but react-chessboard supports it)
-  const onPieceDrop = useCallback((sourceSquare, targetSquare) => {
+  const onPieceDrop = useCallback(({ sourceSquare, targetSquare }) => {
     if (!isPlayerTurn || isGameOver || isThinking) return false;
 
     const result = makeMove(sourceSquare, targetSquare);
@@ -173,6 +264,8 @@ export function ChessGame({
 
   // Handle undo
   const handleUndo = useCallback(() => {
+    computerMoveIdRef.current += 1;
+    stopThinking();
     if (mode === 'computer') {
       // Undo both player and computer move
       undoTwoMoves();
@@ -182,15 +275,17 @@ export function ChessGame({
     setSelectedSquare(null);
     setLegalMoves([]);
     setLastMove(null);
-  }, [mode, undoMove, undoTwoMoves]);
+  }, [mode, undoMove, undoTwoMoves, stopThinking]);
 
   // Handle new game
   const handleNewGame = useCallback(() => {
+    computerMoveIdRef.current += 1;
+    stopThinking();
     resetGame();
     setSelectedSquare(null);
     setLegalMoves([]);
     setLastMove(null);
-  }, [resetGame]);
+  }, [resetGame, stopThinking]);
 
   // Build custom square styles
   const customSquareStyles = useMemo(() => {
@@ -199,14 +294,14 @@ export function ChessGame({
     // Highlight selected square
     if (selectedSquare) {
       styles[selectedSquare] = {
-        backgroundColor: 'rgba(47, 124, 109, 0.25)',
+        backgroundColor: 'var(--selected-square)',
       };
     }
 
     // Highlight legal move squares with dots
     legalMoves.forEach(square => {
       styles[square] = {
-        background: 'radial-gradient(circle, rgba(31, 41, 51, 0.25) 25%, transparent 25%)',
+        background: 'radial-gradient(circle, var(--legal-move) 25%, transparent 26%)',
         cursor: 'pointer',
       };
     });
@@ -215,11 +310,11 @@ export function ChessGame({
     if (lastMove) {
       styles[lastMove.from] = {
         ...styles[lastMove.from],
-        backgroundColor: 'rgba(207, 177, 120, 0.35)',
+        backgroundColor: 'var(--last-move-from)',
       };
       styles[lastMove.to] = {
         ...styles[lastMove.to],
-        backgroundColor: 'rgba(207, 177, 120, 0.55)',
+        backgroundColor: 'var(--last-move-to)',
       };
     }
 
@@ -227,7 +322,7 @@ export function ChessGame({
     threatenedSquares.forEach(square => {
       styles[square] = {
         ...styles[square],
-        boxShadow: 'inset 0 0 0 3px rgba(202, 85, 68, 0.6)',
+        boxShadow: 'inset 0 0 0 3px var(--danger-ring)',
       };
     });
 
@@ -241,7 +336,7 @@ export function ChessGame({
             const square = String.fromCharCode(97 + col) + (8 - row);
             styles[square] = {
               ...styles[square],
-              backgroundColor: 'rgba(202, 85, 68, 0.5)',
+              backgroundColor: 'var(--check-square)',
             };
           }
         }
@@ -261,63 +356,127 @@ export function ChessGame({
       ? 'Your turn!'
       : 'Computer is thinking...';
 
+  const whiteName = mode === 'computer'
+    ? (playerColor === 'w' ? 'You' : 'Computer')
+    : 'White';
+  const blackName = mode === 'computer'
+    ? (playerColor === 'b' ? 'You' : 'Computer')
+    : 'Black';
+  const matchLabel = mode === 'computer'
+    ? `Computer · Level ${difficulty}`
+    : 'Pass & Play';
+  const liveStatus = isGameOver
+    ? (gameResult === 'draw'
+        ? "It's a draw!"
+        : `${gameResult === 'white' ? 'White' : 'Black'} wins!`)
+    : `${turnText}${isCheck ? ' Check!' : ''}`;
+  const statusTone = isCheck
+    ? 'danger'
+    : (isComputerTurn || isThinking)
+        ? 'thinking'
+        : 'ready';
+  const helperText = isComputerTurn || isThinking
+    ? 'The computer is choosing a move.'
+    : selectedSquare
+      ? 'Now choose a highlighted square.'
+      : 'Tap a piece, then tap where it should go.';
+
   return (
-    <div className="chess-game">
-      <div className="game-header">
-        <button className="back-button" onClick={onBack}>
-          ← Back
-        </button>
-        <div className="turn-indicator">
-          {isGameOver ? (
-            <span className="game-over-text">
-              {gameResult === 'draw' ? "It's a draw!" : `${gameResult === 'white' ? 'White' : 'Black'} wins!`}
+    <section className="chess-game" aria-label="Chess game">
+      <div className="game-stage">
+        <div className="game-topbar">
+          <button className="back-button" onClick={onBack}>
+            ← Back
+          </button>
+          <span className="match-label">
+            <span aria-hidden="true">♟</span>
+            {matchLabel}
+          </span>
+        </div>
+
+        <div className="match-strip">
+          <div className={`player-seat player-seat--white ${turn === 'w' && !isGameOver ? 'active' : ''}`}>
+            <span className="seat-piece" aria-hidden="true">♔</span>
+            <span className="seat-copy">
+              <strong>{whiteName}</strong>
+              <span>White pieces</span>
             </span>
-          ) : (
-            <span className={isCheck ? 'check-warning' : ''}>
-              {turnText}
-              {isCheck && ' - Check!'}
+          </div>
+
+          <div
+            className={`turn-indicator status-pill status-pill--${statusTone}`}
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            <span className="status-dot" aria-hidden="true" />
+            <span>{liveStatus}</span>
+          </div>
+
+          <div className={`player-seat player-seat--black ${turn === 'b' && !isGameOver ? 'active' : ''}`}>
+            <span className="seat-piece" aria-hidden="true">♚</span>
+            <span className="seat-copy">
+              <strong>{blackName}</strong>
+              <span>Black pieces</span>
             </span>
-          )}
+          </div>
+        </div>
+
+        <div
+          className="board-container"
+          ref={boardRegionRef}
+          role="group"
+          aria-label="Chess board"
+          aria-describedby="board-instructions"
+        >
+          <p className="visually-hidden" id="board-instructions">
+            Use Tab to reach a movable piece, press Enter or Space to select it,
+            then choose a legal destination.
+          </p>
+          <Chessboard
+            options={{
+              id: 'kids-chess-board',
+              position: position,
+              onSquareClick: onSquareClick,
+              onPieceDrop: onPieceDrop,
+              onPieceClick: onPieceClick,
+              boardOrientation: boardOrientation,
+              squareStyles: customSquareStyles,
+              animationDurationInMs: 200,
+              allowDragging: false,
+              allowDrawingArrows: false,
+              boardStyle: {
+                borderRadius: '12px',
+                boxShadow: 'var(--shadow-sm)',
+                border: '1px solid var(--line)',
+              },
+              darkSquareStyle: { backgroundColor: 'var(--board-dark)' },
+              lightSquareStyle: { backgroundColor: 'var(--board-light)' },
+            }}
+          />
+        </div>
+
+        <div className="game-footer action-rail">
+          <p className="game-helper" aria-live="polite">{helperText}</p>
+          <div className="game-controls">
+            <button
+              className="control-button undo-button"
+              onClick={handleUndo}
+              disabled={!canUndo || isThinking || isComputerTurn}
+            >
+              <span aria-hidden="true">↶</span>
+              Undo
+            </button>
+            <button
+              className="control-button new-game-button"
+              onClick={handleNewGame}
+            >
+              <span aria-hidden="true">↻</span>
+              New Game
+            </button>
+          </div>
         </div>
       </div>
-
-      <div className="board-container">
-        <Chessboard
-          options={{
-            position: position,
-            onSquareClick: onSquareClick,
-            onPieceDrop: onPieceDrop,
-            onPieceClick: onPieceClick,
-            boardOrientation: boardOrientation,
-            squareStyles: customSquareStyles,
-            animationDurationInMs: 200,
-            allowDragging: false,
-            boardStyle: {
-              borderRadius: '16px',
-              boxShadow: 'var(--shadow-sm)',
-              border: '1px solid rgba(224, 216, 204, 0.9)',
-            },
-            darkSquareStyle: { backgroundColor: '#8aa091' },
-            lightSquareStyle: { backgroundColor: '#f1e9dd' },
-          }}
-        />
-      </div>
-
-      <div className="game-controls">
-        <button
-          className="control-button undo-button"
-          onClick={handleUndo}
-          disabled={!canUndo || isThinking}
-        >
-          ↩ Undo
-        </button>
-        <button
-          className="control-button new-game-button"
-          onClick={handleNewGame}
-        >
-          🔄 New Game
-        </button>
-      </div>
-    </div>
+    </section>
   );
 }

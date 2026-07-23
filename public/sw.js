@@ -1,6 +1,6 @@
 /* Service worker for offline play (PWA-lite, no build plugins required). */
 
-const CACHE_NAME = 'kids-chess-v2'
+const CACHE_NAME = 'kids-chess-v3'
 
 const CORE_URLS = [
   '/',
@@ -123,4 +123,3 @@ self.addEventListener('fetch', (event) => {
   // Static assets: cache-first for snappy offline behavior.
   event.respondWith(cacheFirst(request))
 })
-

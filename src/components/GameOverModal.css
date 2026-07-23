@@ -1,138 +1,229 @@
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(31, 41, 51, 0.65);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  inset: 0;
   z-index: 1000;
+  display: grid;
+  place-items: center;
   padding: 24px;
-  animation: fadeIn 0.3s ease-out;
+  background: var(--overlay);
+  backdrop-filter: blur(8px);
+  animation: modal-backdrop-enter 220ms ease-out both;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+@keyframes modal-backdrop-enter {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .game-over-modal {
-  background: var(--bg-card);
-  border-radius: 28px;
-  padding: 40px;
+  --outcome-color: var(--accent);
+  --outcome-soft: var(--accent-soft);
+  width: min(100%, 430px);
+  padding: 36px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--outcome-color) 34%, var(--line));
+  border-radius: var(--radius-dialog);
+  background:
+    radial-gradient(circle at 50% -18%, var(--outcome-soft), transparent 48%),
+    var(--bg-card-solid);
+  box-shadow: var(--shadow-float);
   text-align: center;
-  max-width: 400px;
-  width: 100%;
-  border: 1px solid var(--line);
-  box-shadow: var(--shadow);
-  animation: slideUp 0.4s ease-out;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  animation: modal-card-enter 340ms ease-out both;
 }
 
-@keyframes slideUp {
+.game-over-modal--draw {
+  --outcome-color: var(--amber);
+  --outcome-soft: var(--amber-soft);
+}
+
+.game-over-modal--loss {
+  --outcome-color: var(--muted);
+  --outcome-soft: color-mix(in srgb, var(--muted) 12%, transparent);
+}
+
+.game-over-modal--friend {
+  --outcome-color: var(--accent);
+  --outcome-soft: var(--accent-soft);
+}
+
+@keyframes modal-card-enter {
   from {
     opacity: 0;
-    transform: translateY(50px);
+    transform: translateY(18px) scale(0.98);
   }
+
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
-.game-over-modal.winner {
-  animation: slideUp 0.4s ease-out, celebrate 0.5s ease-out 0.4s;
+.result-seal {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 92px;
+  height: 92px;
+  margin: 0 auto 20px;
+  border: 1px solid color-mix(in srgb, var(--outcome-color) 42%, var(--line));
+  border-radius: var(--radius-dialog);
+  background: var(--outcome-soft);
+  color: var(--outcome-color);
+  transform: rotate(-3deg);
 }
 
-@keyframes celebrate {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+.result-seal::before,
+.result-seal::after {
+  position: absolute;
+  border: 1px solid color-mix(in srgb, var(--outcome-color) 28%, transparent);
+  border-radius: inherit;
+  content: '';
+  inset: 7px;
 }
 
-.celebration-emoji {
-  font-size: 72px;
-  margin-bottom: 16px;
-  animation: bounce 1s ease-in-out infinite;
+.result-seal::after {
+  border-style: dashed;
+  border-radius: 20px;
+  inset: 13px;
 }
 
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+.result-seal > span {
+  position: relative;
+  z-index: 1;
+  font-size: 46px;
+  line-height: 1;
+  transform: rotate(3deg);
+}
+
+.game-over-modal--win .result-seal {
+  animation: result-seal-celebrate 620ms ease-out 320ms both;
+}
+
+@keyframes result-seal-celebrate {
+  0% {
+    transform: rotate(-3deg) scale(1);
+  }
+
+  50% {
+    transform: rotate(3deg) scale(1.08);
+  }
+
+  100% {
+    transform: rotate(-3deg) scale(1);
+  }
+}
+
+.modal-kicker {
+  color: var(--outcome-color);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
 
 .modal-title {
-  font-family: var(--font-display);
-  font-size: 32px;
+  margin: 6px 0 9px;
   color: var(--text);
-  margin-bottom: 8px;
-}
-
-.winner .modal-title {
-  color: #2f7c6d;
+  font-family: var(--font-display);
+  font-size: 38px;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
 }
 
 .modal-message {
-  font-size: 18px;
+  max-width: 310px;
+  margin: 0 auto 28px;
   color: var(--muted);
-  margin-bottom: 32px;
+  font-size: 17px;
+  line-height: 1.55;
 }
 
 .modal-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  display: grid;
+  gap: 10px;
 }
 
 .modal-button {
-  padding: 14px 28px;
-  font-size: 18px;
-  font-weight: 600;
-  border: none;
-  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 52px;
+  padding: 13px 20px;
+  border-radius: var(--radius-pill);
   cursor: pointer;
-  transition: all 0.2s;
+  font-size: 16px;
+  font-weight: 800;
+  transition:
+    transform var(--motion-standard),
+    border-color var(--motion-standard),
+    box-shadow var(--motion-standard),
+    background-color var(--motion-standard);
 }
 
 .modal-button:hover {
   transform: translateY(-1px);
 }
 
+.modal-button > span:last-child {
+  font-size: 19px;
+  line-height: 1;
+}
+
 .play-again {
+  border: 1px solid var(--brand-bg);
   background: var(--brand-bg);
   color: var(--brand-text);
-}
-
-.back-menu {
-  background: transparent;
-  color: var(--text);
-  border: 1px solid var(--line);
-}
-
-.back-menu:hover {
-  border-color: rgba(47, 124, 109, 0.4);
   box-shadow: var(--shadow-sm);
 }
 
-@media (max-width: 600px) {
-  .game-over-modal {
-    padding: 32px 24px;
+.play-again:hover {
+  box-shadow: var(--shadow);
+}
+
+.back-menu {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text);
+}
+
+.back-menu:hover {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  background: var(--accent-faint);
+}
+
+@media (max-width: 520px) {
+  .modal-overlay {
+    align-items: end;
+    padding: 12px;
   }
 
-  .celebration-emoji {
-    font-size: 56px;
+  .game-over-modal {
+    padding: 30px 22px 22px;
+    border-radius: var(--radius-dialog);
+  }
+
+  .result-seal {
+    width: 78px;
+    height: 78px;
+    margin-bottom: 16px;
+    border-radius: var(--radius-card);
+  }
+
+  .result-seal > span {
+    font-size: 39px;
   }
 
   .modal-title {
-    font-size: 26px;
+    font-size: 31px;
   }
 
   .modal-message {
-    font-size: 16px;
-  }
-
-  .modal-button {
-    font-size: 16px;
+    margin-bottom: 22px;
+    font-size: 15px;
   }
 }

@@ -91,39 +91,47 @@ function App() {
   const isSetupScreen = screen === 'setup';
 
   return (
-    <div className="app">
+    <div className={`app app--${screen}`}>
       <header className="site-header">
         <div className="brand" aria-label="Kids Chess">
           <span className="brand-icon" aria-hidden="true">♞</span>
-          <span className="brand-text">Kids Chess</span>
+          <span className="brand-lockup">
+            <span className="brand-text">Kids Chess</span>
+            <span className="brand-note">No ads. Just chess.</span>
+          </span>
         </div>
-        <nav className="site-nav">
-          <button
-            className={`nav-link ${isStartScreen ? 'active' : ''}`}
-            onClick={handleGoHome}
-            aria-current={isStartScreen ? 'page' : undefined}
-          >
-            Main Menu
-          </button>
-          <button
-            className={`nav-link ${isSetupScreen ? 'active' : ''}`}
-            onClick={handleOpenSetup}
-            aria-current={isSetupScreen ? 'page' : undefined}
-          >
-            Setup
-          </button>
+        <nav className="site-nav" aria-label="Primary navigation">
+          {screen !== 'playing' && (
+            <>
+              <button
+                className={`nav-link ${isStartScreen ? 'active' : ''}`}
+                onClick={handleGoHome}
+                aria-current={isStartScreen ? 'page' : undefined}
+              >
+                Main Menu
+              </button>
+              <button
+                className={`nav-link ${isSetupScreen ? 'active' : ''}`}
+                onClick={handleOpenSetup}
+                aria-current={isSetupScreen ? 'page' : undefined}
+              >
+                Setup
+              </button>
+            </>
+          )}
           <button
             className="dark-mode-toggle"
             onClick={toggleDarkMode}
             aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
             title={darkMode ? 'Light mode' : 'Dark mode'}
           >
-            {darkMode ? '☀️' : '🌙'}
+            <span aria-hidden="true">{darkMode ? '☼' : '☾'}</span>
+            <span className="theme-label">{darkMode ? 'Light' : 'Dark'}</span>
           </button>
         </nav>
       </header>
 
-      <main className="page">
+      <main className={`page page--${screen}`}>
         {screen === 'start' && (
           <StartScreen onSelectMode={handleSelectMode} />
         )}
@@ -134,14 +142,20 @@ function App() {
 
         {screen === 'playing' && (
           <>
-            <ChessGame
-              key={gameKey}
-              mode={gameMode}
-              playerColor={gameSettings.playerColor}
-              difficulty={gameSettings.difficulty}
-              onGameOver={handleGameOver}
-              onBack={handleBack}
-            />
+            <div
+              className="game-layer"
+              inert={gameResult ? true : undefined}
+              aria-hidden={gameResult ? 'true' : undefined}
+            >
+              <ChessGame
+                key={gameKey}
+                mode={gameMode}
+                playerColor={gameSettings.playerColor}
+                difficulty={gameSettings.difficulty}
+                onGameOver={handleGameOver}
+                onBack={handleBack}
+              />
+            </div>
             {gameResult && (
               <GameOverModal
                 result={gameResult}

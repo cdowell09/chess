@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { Chess } from 'chess.js';
 
 // Simple AI that works on all difficulty levels
@@ -339,15 +339,19 @@ function getBestMoveForDifficulty(fen, difficulty) {
 
 export function useStockfish(difficulty = 5) {
   const [isThinking, setIsThinking] = useState(false);
+  const requestIdRef = useRef(0);
 
   const getBestMove = useCallback(async (fen) => {
+    const requestId = ++requestIdRef.current;
     setIsThinking(true);
 
     // Add a thinking delay based on difficulty (feels more natural)
     const thinkTime = 300 + difficulty * 100 + Math.random() * 500;
     await new Promise(resolve => setTimeout(resolve, thinkTime));
+    if (requestId !== requestIdRef.current) return null;
 
     const move = getBestMoveForDifficulty(fen, difficulty);
+    if (requestId !== requestIdRef.current) return null;
     setIsThinking(false);
 
     if (move) {
@@ -358,6 +362,7 @@ export function useStockfish(difficulty = 5) {
   }, [difficulty]);
 
   const stopThinking = useCallback(() => {
+    requestIdRef.current += 1;
     setIsThinking(false);
   }, []);
 
