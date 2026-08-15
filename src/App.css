@@ -18,7 +18,10 @@ body {
   min-height: 100vh;
   min-height: 100dvh;
   overflow-x: hidden;
-  background: var(--bg-primary);
+  background:
+    radial-gradient(900px 620px at 12% -12%, var(--ambient-sage) 0%, transparent 62%),
+    radial-gradient(780px 560px at 96% 2%, var(--ambient-peach) 0%, transparent 60%),
+    var(--bg-primary);
   color: var(--text);
   font-family: var(--font-body);
   -webkit-tap-highlight-color: transparent;
@@ -29,20 +32,6 @@ body {
   transition:
     background-color var(--motion-theme),
     color var(--motion-theme);
-}
-
-:root:not([data-theme="dark"]) body {
-  background:
-    radial-gradient(900px 620px at 12% -12%, var(--ambient-sage) 0%, transparent 62%),
-    radial-gradient(780px 560px at 96% 2%, var(--ambient-peach) 0%, transparent 60%),
-    var(--bg-primary);
-}
-
-[data-theme="dark"] body {
-  background:
-    radial-gradient(900px 620px at 12% -12%, var(--ambient-sage) 0%, transparent 62%),
-    radial-gradient(780px 560px at 96% 2%, var(--ambient-peach) 0%, transparent 60%),
-    var(--bg-primary);
 }
 
 button {
@@ -253,15 +242,7 @@ button:focus-visible {
   min-height: 100%;
 }
 
-.surface-card {
-  border: 1px solid var(--line);
-  border-radius: var(--radius-card);
-  background: var(--bg-card);
-  box-shadow: var(--shadow-sm);
-}
-
-.back-button,
-.pill-button {
+.back-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -281,15 +262,13 @@ button:focus-visible {
     background-color var(--motion-theme);
 }
 
-.back-button:hover,
-.pill-button:hover {
+.back-button:hover {
   border-color: color-mix(in srgb, var(--accent) 44%, var(--line));
   box-shadow: var(--shadow-sm);
   transform: translateY(-1px);
 }
 
-.back-button:active,
-.pill-button:active {
+.back-button:active {
   transform: translateY(0);
 }
 

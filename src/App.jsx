@@ -76,11 +76,6 @@ function App() {
     setScreen('start');
   }, []);
 
-  const handleGoHome = useCallback(() => {
-    setGameResult(null);
-    setScreen('start');
-  }, []);
-
   const handleOpenSetup = useCallback(() => {
     setGameMode('computer');
     setGameResult(null);
@@ -105,7 +100,7 @@ function App() {
             <>
               <button
                 className={`nav-link ${isStartScreen ? 'active' : ''}`}
-                onClick={handleGoHome}
+                onClick={handleBackToMenu}
                 aria-current={isStartScreen ? 'page' : undefined}
               >
                 Main Menu
@@ -142,11 +137,7 @@ function App() {
 
         {screen === 'playing' && (
           <>
-            <div
-              className="game-layer"
-              inert={gameResult ? true : undefined}
-              aria-hidden={gameResult ? 'true' : undefined}
-            >
+            <div className="game-layer">
               <ChessGame
                 key={gameKey}
                 mode={gameMode}

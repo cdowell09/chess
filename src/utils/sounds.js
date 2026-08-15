@@ -1,52 +1,6 @@
-import { Howl } from 'howler';
-
-// Sound effects - we'll use simple synthesized sounds or load from files
-const sounds = {};
-
-// Initialize sounds - using base64 encoded simple sounds for now
-// These can be replaced with actual sound files later
-function initSounds() {
-  // Simple click/tap sound
-  sounds.click = new Howl({
-    src: ['data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU'],
-    volume: 0.3,
-  });
-
-  // Move sound - slightly longer
-  sounds.move = new Howl({
-    src: ['data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU'],
-    volume: 0.5,
-  });
-
-  // Capture sound - more impactful
-  sounds.capture = new Howl({
-    src: ['data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU'],
-    volume: 0.7,
-  });
-
-  // Check sound - alert
-  sounds.check = new Howl({
-    src: ['data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU'],
-    volume: 0.6,
-  });
-
-  // Win sound - celebration
-  sounds.win = new Howl({
-    src: ['data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU'],
-    volume: 0.8,
-  });
-}
-
-// Lazy initialization
-let initialized = false;
+// Sound effects synthesized with the Web Audio API (no audio files required).
 
 export function playSound(name) {
-  if (!initialized) {
-    initSounds();
-    initialized = true;
-  }
-
-  // Use Web Audio API to generate simple sounds since base64 sounds are placeholders
   try {
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     const oscillator = audioContext.createOscillator();
@@ -104,7 +58,7 @@ export function playSound(name) {
         }, 120);
         break;
 
-      case 'win':
+      case 'win': {
         // Celebratory ascending notes
         const notes = [523, 659, 784, 1047]; // C5, E5, G5, C6
         notes.forEach((freq, i) => {
@@ -122,12 +76,12 @@ export function playSound(name) {
           }, i * 100);
         });
         break;
+      }
 
       default:
         break;
     }
-  } catch (e) {
+  } catch {
     // Audio not supported, silently fail
-    console.log('Audio not available');
   }
 }

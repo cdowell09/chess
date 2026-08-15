@@ -10,21 +10,18 @@ export function useChessGame() {
   const turn = game.turn(); // 'w' or 'b'
   const isGameOver = game.isGameOver();
   const isCheck = game.isCheck();
-  const isCheckmate = game.isCheckmate();
-  const isStalemate = game.isStalemate();
-  const isDraw = game.isDraw();
 
   // Get game result
   const gameResult = useMemo(() => {
     if (!isGameOver) return null;
-    if (isCheckmate) {
+    if (game.isCheckmate()) {
       return turn === 'w' ? 'black' : 'white'; // Winner is opposite of current turn
     }
-    if (isStalemate || isDraw) {
+    if (game.isStalemate() || game.isDraw()) {
       return 'draw';
     }
     return null;
-  }, [isGameOver, isCheckmate, isStalemate, isDraw, turn]);
+  }, [isGameOver, turn, game]);
 
   // Get all legal moves for a piece at a given square
   const getLegalMoves = useCallback((square) => {
@@ -34,28 +31,21 @@ export function useChessGame() {
 
   // Get all squares with pieces that are under attack
   const getThreatenedSquares = useCallback(() => {
-    const dominated = [];
-    const dominated_opponent = []
-    const dominated_mine = [];
-    const dominated_mine_opponent = []
-    const dominated_opponent_mine = []
-    // Check each square for pieces under attack
+    const threatened = [];
     const board = game.board();
     for (let row = 0; row < 8; row++) {
       for (let col = 0; col < 8; col++) {
         const piece = board[row][col];
         if (piece) {
           const square = String.fromCharCode(97 + col) + (8 - row);
-          // isAttacked checks if a square is attacked by the given color
-          // We want to see if this piece is attacked by the opponent
           const attackerColor = piece.color === 'w' ? 'b' : 'w';
           if (game.isAttacked(square, attackerColor)) {
-            dominated.push(square);
+            threatened.push(square);
           }
         }
       }
     }
-    return dominated;
+    return threatened;
   }, [game]);
 
   // Make a move - returns { success, captured, isCheck, isCheckmate }
@@ -77,10 +67,9 @@ export function useChessGame() {
           captured: move.captured,
           isCheck: gameCopy.isCheck(),
           isCheckmate: gameCopy.isCheckmate(),
-          san: move.san,
         };
       }
-    } catch (e) {
+    } catch {
       // Invalid move
     }
 
@@ -113,26 +102,11 @@ export function useChessGame() {
     setMoveHistory([]);
   }, []);
 
-  // Load a specific position
-  const loadPosition = useCallback((fen) => {
-    try {
-      const newGame = new Chess(fen);
-      setGame(newGame);
-      setMoveHistory([]);
-      return true;
-    } catch {
-      return false;
-    }
-  }, []);
-
   return {
     position,
     turn,
     isGameOver,
     isCheck,
-    isCheckmate,
-    isStalemate,
-    isDraw,
     gameResult,
     getLegalMoves,
     getThreatenedSquares,
@@ -140,7 +114,6 @@ export function useChessGame() {
     undoMove,
     undoTwoMoves,
     resetGame,
-    loadPosition,
     canUndo: moveHistory.length > 0,
   };
 }

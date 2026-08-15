@@ -1,10 +1,4 @@
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  display: grid;
-  place-items: center;
-  padding: 24px;
+.game-over-modal::backdrop {
   background: var(--overlay);
   backdrop-filter: blur(8px);
   animation: modal-backdrop-enter 220ms ease-out both;
@@ -24,8 +18,8 @@
   --outcome-color: var(--accent);
   --outcome-soft: var(--accent-soft);
   width: min(100%, 430px);
+  margin: auto;
   padding: 36px;
-  overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--outcome-color) 34%, var(--line));
   border-radius: var(--radius-dialog);
   background:
@@ -46,10 +40,6 @@
   --outcome-soft: color-mix(in srgb, var(--muted) 12%, transparent);
 }
 
-.game-over-modal--friend {
-  --outcome-color: var(--accent);
-  --outcome-soft: var(--accent-soft);
-}
 
 @keyframes modal-card-enter {
   from {
@@ -197,12 +187,9 @@
 }
 
 @media (max-width: 520px) {
-  .modal-overlay {
-    align-items: end;
-    padding: 12px;
-  }
-
   .game-over-modal {
+    width: calc(100% - 24px);
+    margin-block: auto 12px;
     padding: 30px 22px 22px;
     border-radius: var(--radius-dialog);
   }

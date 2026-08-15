@@ -1,13 +1,11 @@
 /* Service worker for offline play (PWA-lite, no build plugins required). */
 
-const CACHE_NAME = 'kids-chess-v3'
+const CACHE_NAME = 'kids-chess-v4'
 
 const CORE_URLS = [
   '/',
   '/index.html',
   '/manifest.webmanifest',
-  '/offline.html',
-  '/vite.svg',
   '/icons/icon.svg',
 ]
 
@@ -102,8 +100,7 @@ async function networkFirstForNavigate(request) {
   } catch {
     const cachedShell =
       (await caches.match('/index.html')) ||
-      (await caches.match('/', { ignoreSearch: true })) ||
-      (await caches.match('/offline.html'))
+      (await caches.match('/', { ignoreSearch: true }))
 
     return cachedShell || new Response('Offline', { status: 503, headers: { 'Content-Type': 'text/plain' } })
   }

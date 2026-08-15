@@ -1,21 +1,15 @@
 import { useEffect, useRef } from 'react';
-import { UnicornFlyby } from './UnicornFlyby';
 import './GameOverModal.css';
+import './UnicornFlyby.css';
 
 export function GameOverModal({ result, playerColor, mode, onPlayAgain, onBackToMenu }) {
   const playerWon = mode === 'computer' && result === (playerColor === 'w' ? 'white' : 'black');
   const dialogRef = useRef(null);
-  const playAgainRef = useRef(null);
 
   useEffect(() => {
-    const previouslyFocused = document.activeElement;
-    playAgainRef.current?.focus();
-
-    return () => {
-      if (previouslyFocused instanceof HTMLElement && previouslyFocused.isConnected) {
-        previouslyFocused.focus();
-      }
-    };
+    const dialog = dialogRef.current;
+    dialog?.showModal();
+    return () => dialog?.close();
   }, []);
 
   let title, message, emoji;
@@ -46,64 +40,44 @@ export function GameOverModal({ result, playerColor, mode, onPlayAgain, onBackTo
         ? 'win'
         : 'loss';
 
-  const handleDialogKeyDown = (event) => {
-    if (event.key === 'Escape') {
-      event.preventDefault();
-      onBackToMenu();
-      return;
-    }
-
-    if (event.key !== 'Tab') return;
-
-    const focusable = dialogRef.current?.querySelectorAll('button:not(:disabled)');
-    if (!focusable?.length) return;
-
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-
-    if (event.shiftKey && document.activeElement === first) {
-      event.preventDefault();
-      last.focus();
-    } else if (!event.shiftKey && document.activeElement === last) {
-      event.preventDefault();
-      first.focus();
-    }
-  };
-
   return (
-    <div className="modal-overlay" role="presentation">
-      {playerWon && <UnicornFlyby />}
-      <div
-        className={`game-over-modal game-over-modal--${outcome}`}
-        ref={dialogRef}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="game-over-title"
-        aria-describedby="game-over-message"
-        onKeyDown={handleDialogKeyDown}
-      >
-        <div className="result-seal" aria-hidden="true">
-          <span>{emoji}</span>
+    <dialog
+      className={`game-over-modal game-over-modal--${outcome}`}
+      ref={dialogRef}
+      aria-labelledby="game-over-title"
+      aria-describedby="game-over-message"
+      onCancel={(event) => {
+        event.preventDefault();
+        onBackToMenu();
+      }}
+    >
+      {playerWon && (
+        <div className="unicorn-flyby" aria-hidden="true">
+          <div className="unicorn-rainbow" />
+          <div className="unicorn-emoji">🦄</div>
         </div>
-        <span className="modal-kicker">Game complete</span>
-        <h1 className="modal-title" id="game-over-title">{title}</h1>
-        <p className="modal-message" id="game-over-message">{message}</p>
-
-        <div className="modal-buttons">
-          <button
-            className="modal-button play-again"
-            ref={playAgainRef}
-            onClick={onPlayAgain}
-          >
-            <span>Play Again</span>
-            <span aria-hidden="true">↻</span>
-          </button>
-          <button className="modal-button back-menu" onClick={onBackToMenu}>
-            <span>Main Menu</span>
-            <span aria-hidden="true">→</span>
-          </button>
-        </div>
+      )}
+      <div className="result-seal" aria-hidden="true">
+        <span>{emoji}</span>
       </div>
-    </div>
+      <span className="modal-kicker">Game complete</span>
+      <h1 className="modal-title" id="game-over-title">{title}</h1>
+      <p className="modal-message" id="game-over-message">{message}</p>
+
+      <div className="modal-buttons">
+        <button
+          className="modal-button play-again"
+          autoFocus
+          onClick={onPlayAgain}
+        >
+          <span>Play Again</span>
+          <span aria-hidden="true">↻</span>
+        </button>
+        <button className="modal-button back-menu" onClick={onBackToMenu}>
+          <span>Main Menu</span>
+          <span aria-hidden="true">→</span>
+        </button>
+      </div>
+    </dialog>
   );
 }

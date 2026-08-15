@@ -2,9 +2,17 @@ import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { Chessboard } from 'react-chessboard';
 import { Chess } from 'chess.js';
 import { useChessGame } from '../hooks/useChessGame';
-import { useStockfish, getRandomMove } from '../hooks/useStockfish';
+import { useStockfish } from '../hooks/useStockfish';
 import { playSound } from '../utils/sounds';
 import './ChessGame.css';
+
+// Sound for a finished move: a player's checkmate is a win, the computer's is just a check.
+function moveSound(result, isPlayer) {
+  if (result.isCheckmate) return isPlayer ? 'win' : 'check';
+  if (result.isCheck) return 'check';
+  if (result.captured) return 'capture';
+  return 'move';
+}
 
 export function ChessGame({
   mode, // 'computer' or 'friend'
@@ -29,7 +37,6 @@ export function ChessGame({
   } = useChessGame();
 
   const {
-    isReady: stockfishReady,
     isThinking,
     getBestMove,
     stopThinking,
@@ -61,45 +68,17 @@ export function ChessGame({
       await new Promise(resolve => setTimeout(resolve, 500));
       if (requestIsStale()) return;
 
-      let bestMove = null;
+      const bestMove = await getBestMove(position);
+      if (!bestMove || requestIsStale()) return;
 
-      if (stockfishReady) {
-        bestMove = await getBestMove(position);
-        if (requestIsStale()) return;
-      }
+      const from = bestMove.substring(0, 2);
+      const to = bestMove.substring(2, 4);
+      const promotion = bestMove.length > 4 ? bestMove[4] : 'q';
 
-      // Fallback to random move if Stockfish didn't return anything
-      if (!bestMove) {
-        const tempGame = new Chess(position);
-        const randomMove = getRandomMove(tempGame);
-        if (randomMove) {
-          // Parse the SAN move to get from/to squares
-          const move = tempGame.move(randomMove);
-          if (move) {
-            bestMove = move.from + move.to + (move.promotion || '');
-          }
-        }
-      }
-
-      if (bestMove && !requestIsStale()) {
-        const from = bestMove.substring(0, 2);
-        const to = bestMove.substring(2, 4);
-        const promotion = bestMove.length > 4 ? bestMove[4] : 'q';
-
-        const result = makeMove(from, to, promotion);
-        if (result.success) {
-          setLastMove({ from, to });
-          // Play appropriate sound
-          if (result.isCheckmate) {
-            playSound('check');
-          } else if (result.isCheck) {
-            playSound('check');
-          } else if (result.captured) {
-            playSound('capture');
-          } else {
-            playSound('move');
-          }
-        }
+      const result = makeMove(from, to, promotion);
+      if (result.success) {
+        setLastMove({ from, to });
+        playSound(moveSound(result, false));
       }
     };
 
@@ -112,7 +91,7 @@ export function ChessGame({
       }
       stopThinking();
     };
-  }, [isComputerTurn, isGameOver, position, stockfishReady, getBestMove, makeMove, stopThinking]);
+  }, [isComputerTurn, isGameOver, position, getBestMove, makeMove, stopThinking]);
 
   // Handle game over
   useEffect(() => {
@@ -131,16 +110,7 @@ export function ChessGame({
         const result = makeMove(selectedSquare, square);
         if (result.success) {
           setLastMove({ from: selectedSquare, to: square });
-          // Play appropriate sound
-          if (result.isCheckmate) {
-            playSound('win');
-          } else if (result.isCheck) {
-            playSound('check');
-          } else if (result.captured) {
-            playSound('capture');
-          } else {
-            playSound('move');
-          }
+          playSound(moveSound(result, true));
         }
       }
       // Clear selection
@@ -196,9 +166,9 @@ export function ChessGame({
       squareElement.setAttribute('aria-disabled', String(!isKeyboardTarget));
       squareElement.setAttribute('aria-label', `${square}${pieceLabel}${stateLabel}`);
 
-      squareElement.querySelectorAll('button').forEach((pieceButton) => {
-        pieceButton.setAttribute('aria-hidden', 'true');
-        pieceButton.setAttribute('tabindex', '-1');
+      squareElement.querySelectorAll('button, [data-piece]').forEach((pieceNode) => {
+        pieceNode.setAttribute('aria-hidden', 'true');
+        pieceNode.setAttribute('tabindex', '-1');
       });
 
       const handleKeyDown = (event) => {
@@ -233,34 +203,6 @@ export function ChessGame({
     handleSquareClick(square);
   }, [handleSquareClick]);
 
-  // Wrapper for react-chessboard's onPieceClick (receives object)
-  const onPieceClick = useCallback(({ square }) => {
-    handleSquareClick(square);
-  }, [handleSquareClick]);
-
-  // Handle piece drag (optional, but react-chessboard supports it)
-  const onPieceDrop = useCallback(({ sourceSquare, targetSquare }) => {
-    if (!isPlayerTurn || isGameOver || isThinking) return false;
-
-    const result = makeMove(sourceSquare, targetSquare);
-    if (result.success) {
-      setLastMove({ from: sourceSquare, to: targetSquare });
-      setSelectedSquare(null);
-      setLegalMoves([]);
-      // Play appropriate sound
-      if (result.isCheckmate) {
-        playSound('win');
-      } else if (result.isCheck) {
-        playSound('check');
-      } else if (result.captured) {
-        playSound('capture');
-      } else {
-        playSound('move');
-      }
-      return true;
-    }
-    return false;
-  }, [isPlayerTurn, isGameOver, isThinking, makeMove]);
 
   // Handle undo
   const handleUndo = useCallback(() => {
@@ -438,8 +380,6 @@ export function ChessGame({
               id: 'kids-chess-board',
               position: position,
               onSquareClick: onSquareClick,
-              onPieceDrop: onPieceDrop,
-              onPieceClick: onPieceClick,
               boardOrientation: boardOrientation,
               squareStyles: customSquareStyles,
               animationDurationInMs: 200,
