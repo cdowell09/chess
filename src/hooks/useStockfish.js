@@ -367,16 +367,8 @@ export function useStockfish(difficulty = 5) {
   }, []);
 
   return {
-    isReady: true, // Always ready since we don't need to load anything
     isThinking,
     getBestMove,
     stopThinking,
   };
-}
-
-// Export for fallback use
-export function getRandomMove(game) {
-  const moves = game.moves();
-  if (moves.length === 0) return null;
-  return moves[Math.floor(Math.random() * moves.length)];
 }

@@ -11,7 +11,7 @@ Kids Chess is an ad-free chess web app designed for young children (ages 3-7). I
 - **Vite + React** - Build tool and UI framework
 - **chess.js** - Chess game logic, move validation, game state
 - **react-chessboard v5** - Chess board UI component
-- **Howler.js** - Sound effects
+- **Web Audio API** - Sound effects
 
 ## Key Architecture Decisions
 
@@ -78,7 +78,7 @@ npx vercel
 The app uses a service worker (`public/sw.js`) for offline play. When deploying updates that change asset hashes, bump the `CACHE_NAME` version in `sw.js` to invalidate stale caches:
 
 ```js
-const CACHE_NAME = 'kids-chess-v2'  // Increment on deploy
+const CACHE_NAME = 'kids-chess-v4'  // Increment on deploy
 ```
 
 Without this, users may get cached HTML referencing old JS files that no longer exist.

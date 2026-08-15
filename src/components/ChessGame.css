@@ -346,16 +346,6 @@
 }
 
 @media (max-width: 400px) {
-  .seat-copy span {
-    display: none;
-  }
-
-  .seat-piece {
-    width: 32px;
-    height: 32px;
-    font-size: 20px;
-  }
-
   .control-button {
     padding-inline: 12px;
   }
